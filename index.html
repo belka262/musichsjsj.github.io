@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Прозрачный аудиоплеер</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        audio {
+            display: none;
+            width: 80%;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <audio controls id="myAudio">
+        <!-- Добавьте здесь треки по мере необходимости -->
+    </audio>
+    <div id="currentTrack" style="position: fixed; bottom: 10px; left: 10px; color: white;"></div>
+
+    <script>
+        const audio = document.getElementById('myAudio');
+        const tracks = ['good for me (slowed).mp3', 'ANNA ASTI - Царица (Speed up).mp3', 'Покинула чат (Клава Кока cover) Наташа Королёва.mp3', 'И я такой пау пау пау (speed up) Nyan.mp3', 'Сердце Плачет И Болит SHAMAN.mp3', 'Мама Люба SEREBRO.mp3', 'Ветер с моря дул Натали.mp3', 'Улыбка Пицца.mp3', 'Чужие губы Руки Вверх.mp3', 'Бигуди DASHI.mp3', 'Macarena Los Del Río.mp3', 'LaLaLa Yaktak.mp3', 'Знак Водолея Винтаж.mp3', 'Бар 2 лесбухи (Mursallin remix) Скриптонит.mp3', 'Всё хочу TypeLuv.mp3' , 'Black Siemens PHARAOH.mp3', 'Good for me (speed up, reverb) Kyszenn.mp3', 'Danza Kuduro (Remix) Don Omar.mp3', 'Джованна (Kazus Remix) Rosie SD.mp3', 'Люби меня, люби Отпетые мошенники.mp3', 'Батарейка Жуки.mp3', 'А он тебя целует (кавер) Roma Ricci.mp3', 'Ласковый зверь (bedanokov remix) 9 ГРАММ, Alina Orlova.mp3', 'Она пишет мне Wassup LAnaYA.mp3', 'Всё хочу (Speed Up) TypeLuv.mp3', 'Я еду на Лада гранта со мною моя банда Back Prooff.mp3', '9 Грамм ТАТАРИН, StaFFорд63.mp3', 'Путь Экспайн.mp3', 'Какая же ты сука Shambal'One, Dj Boor.mp3', 'Запретить SLAVA MARLOW.mp3', 'Тишины Хочу Антиреспект.mp3', 'Клава Кока - Любимка (NILETTO Cover).mp3', 'Daybe feat. Kanekki - Намеки.mp3', 'Антиреспект - Тишины Хочу (MNTR Remix).mp3', '5Утра - Не Повезло (Barabanov Remix).mp3', 'Иван Дорн - Бигуди (Slider & Magnit Remix).mp3', 'Xcho - Ты И Я (Remix Tiktok Full Version).mp3', 'Ицык Цыпер & Игорь Цыба - Дымок (Green Remix).mp3', 'Rasa - Пулевой (A-Traxx Remix).mp3']; // замените на ваши треки
+
+        function playRandomTrack() {
+            const randomIndex = Math.floor(Math.random() * tracks.length);
+            audio.src = encodeURI(tracks[randomIndex]); 
+            audio.play();
+        }
+
+        function decodeAudioFileName(url) {
+            const decodedUrl = decodeURI(url); 
+            const parts = decodedUrl.split('/');
+            const audioFileName = parts[parts.length - 1]; 
+            return audioFileName;
+        }
+
+        function updateCurrentTrackDisplay() {
+            const currentTrackElement = document.getElementById('currentTrack');
+            const currentTrackName = decodeAudioFileName(audio.src); 
+            currentTrackElement.textContent = "Сейчас играет: " + currentTrackName;
+        }
+
+        audio.addEventListener('ended', function() {
+            playRandomTrack();
+        });
+
+        audio.addEventListener('play', updateCurrentTrackDisplay);
+
+        document.addEventListener("DOMContentLoaded", function(event) {
+            playRandomTrack(); 
+        });
+    </script>
+</body>
+</html>
